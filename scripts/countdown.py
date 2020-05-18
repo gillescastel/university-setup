@@ -21,6 +21,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 from courses import Courses
+from config import USERCALENDARID
 
 courses = Courses()
 
@@ -58,7 +59,7 @@ def join(*args):
 def truncate(string, length):
     ellipsis = ' ...'
     if len(string) < length:
-        return string 
+        return string
     return string[:length - len(ellipsis)] + ellipsis
 
 def summary(text):
@@ -186,7 +187,7 @@ def main():
             if 'dateTime' in event['start']
         ]
 
-    events = get_events('primary')
+    events = get_events(userCalendarId)
     # events = get_events('primary') + get_events('school-calendar@import.calendar.google.com')
     print('Done')
 
@@ -197,7 +198,7 @@ def main():
         print(text(events, now))
         if now < evening:
             scheduler.enter(DELAY, 1, print_message)
-    
+
     for event in events:
         # absolute entry, priority 1
         scheduler.enterabs(event['start'].timestamp(), 1, activate_course, argument=(event, ))
@@ -205,7 +206,7 @@ def main():
     # Immediate, priority 1
     scheduler.enter(0, 1, print_message)
     scheduler.run()
-    
+
 
 def wait_for_internet_connection(url, timeout=1):
     while True:
