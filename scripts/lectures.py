@@ -140,10 +140,10 @@ class Lectures(list):
         return l
 
     def compile_master(self):
-        subprocess.Popen(
-            ['latexmk', '-g', '-f', str(self.master_file)],
-            cwd=str(self.root),
+        result = subprocess.run(
+            ['latexmk', '-f', '-interaction=nonstopmode', str(self.master_file)],
             stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stderr=subprocess.DEVNULL,
+            cwd=str(self.root)
         )
         return result.returncode
