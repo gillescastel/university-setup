@@ -146,45 +146,4 @@ class Lectures(list):
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
         )
-
-if __name__ == '__main__':
-    import sys
-    args = sys.argv
-    command = args[1]
-
-
-    lectures = Lectures(Path.cwd())
-
-    if command == 'view':
-        lecture_range = args[2]
-        lecture_range = lectures.parse_range_string(lecture_range)
-        print(lecture_range)
-        lectures.update_lectures_in_master(lecture_range)
-        lectures.compile_master()
-
-    if command == 'new':
-        lectures.new_lecture()
-
-    if command == 'init':
-        from utils import beautify
-        course_title = beautify(lectures.root.stem)
-        lines = [r'\documentclass[a4paper]{article}',
-                 r'\input{../preamble.tex}',
-                 fr'\title{{{course_title}}}',
-                 r'\begin{document}',
-                 r'    \maketitle',
-                 r'    \tableofcontents',
-                 r'    % start lectures',
-                 r'    % end lectures',
-                 r'\end{document}'
-                ]
-        lectures.master_file.touch()
-        lectures.master_file.write_text('\n'.join(lines))
-
-        (lectures.root / 'master.tex.latexmain').touch()
-
-        info_file = lectures.root / 'info.yaml'
-        info_file.touch()
-        info_file.write_text(f"title: '{course_title}'")
-
-        (lectures.root / 'figures').mkdir()
+        return result.returncode
