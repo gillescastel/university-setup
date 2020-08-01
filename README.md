@@ -57,6 +57,10 @@ A lecture file contains a line
 ```
 which is the lecture number, date an title of the lecture. Date format is configurable in `config.py`.
 
+#### `init-all-courses.py`
+
+This is the first file you should run, after creating the directory and the `info.yaml` file for each course. It creates all `master.tex` files.
+
 #### `config.py`
 
 This is where you configure what calendar to use for the countdown script, the root folder of the file structure, and similar stuff. You can also configure the date format used in some places (lecture selection dialog and LaTeX files).
